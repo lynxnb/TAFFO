@@ -27,6 +27,8 @@
 #include "ftocmacros.h"
 #include <math.h>
 
+#define RANGE "range(-100.000000000001, 100.000000000001)"
+
 void field_summary_kernel_c_(int *xmin,
                           int *xmax,
                           int *ymin,
@@ -37,25 +39,27 @@ void field_summary_kernel_c_(int *xmin,
                           double *pressure,
                           double *xvel0,
                           double *yvel0,
-                          double *vl,
-                          double *mss,
-                          double *ien,
-                          double *ken,
-                          double *prss)
+                          __attribute__((annotate("scalar(range(0, 100.0000))"))) double *vl,
+                          __attribute__((annotate("scalar("RANGE")"))) double *mss,
+                          __attribute__((annotate("scalar("RANGE")"))) double *ien,
+                          __attribute__((annotate("scalar(range(0, 1.194000))"))) double *ken,
+                          __attribute__((annotate("scalar("RANGE")"))) double *prss)
 {
 
   int x_min=*xmin;
   int x_max=*xmax;
   int y_min=*ymin;
   int y_max=*ymax;
-  double vol=*vl;
-  double mass=*mss;
-  double ie=*ien;
-  double ke=*ken;
-  double press=*prss;
+  __attribute__((annotate("scalar(range(0, 100.0000))"))) double vol=*vl;
+  __attribute__((annotate("scalar("RANGE")"))) double mass=*mss;
+  __attribute__((annotate("scalar("RANGE")"))) double ie=*ien;
+  __attribute__((annotate("scalar(range(0, 1.194000))"))) double ke=*ken;
+  __attribute__((annotate("scalar("RANGE")"))) double press=*prss;
 
   int j,k,jv,kv;
-  double vsqrd,cell_vol,cell_mass;
+  __attribute__((annotate("scalar("RANGE")"))) double vsqrd;
+  __attribute__((annotate("scalar("RANGE")"))) double cell_vol;
+  __attribute__((annotate("scalar("RANGE")"))) double cell_mass;
 
 
   vol=0.0;
@@ -85,6 +89,7 @@ void field_summary_kernel_c_(int *xmin,
       ke=ke+cell_mass*0.5*vsqrd;
       press=press+cell_vol*pressure[FTNREF2D(j  ,k  ,x_max+4,x_min-2,y_min-2)];
     }
+    printf("TAFFO_DEBUG field_summary_kernel.c: vol=%f, mass=%f, ie=%f, ke=%f, press=%f\n", vol, mass, ie, ke, press);
   }
 
 
