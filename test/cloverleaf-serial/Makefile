@@ -187,6 +187,8 @@ C_MPI_COMPILER=$(C_MPI_COMPILER_$(COMPILER))
 
 C_OBJECT_FILES=$(C_OBJECT_FILES_$(COMPILER))
 
+.PHONY: c_lover clean run
+
 clover_leaf: c_lover *.f90 Makefile
 	$(MPI_COMPILER) $(FLAGS)  \
 	data.f90                        \
@@ -259,3 +261,6 @@ c_lover: *.c Makefile
 
 clean:
 	rm -f *.o *.mod *genmod* *cuda* *hmd* *.cu *.oo *.hmf *.lst *.cub *.ptx *.cl clover_leaf
+
+run: clover_leaf
+	./clover_leaf
