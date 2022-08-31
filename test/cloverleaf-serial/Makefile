@@ -95,7 +95,7 @@ CFLAGS_PGI       = -fastsse -Mipa=fast -Mlist
 CFLAGS_PATHSCALE = -O3
 CFLAGS_XL        = -O5 -qipa=partition=large -g -qfullpath -Q -qlistopt -qattr=full -qlist -qreport -qxref=full -qsource -qsuppress=1506-224:1500-036 -qsrcmsg
 CFLAGS_          = -O3
-CFLAGS_TAFFO     = -O3 -march=native -funroll-loops -fPIE -o $(TAFFO_OUTPUT)
+CFLAGS_TAFFO     = -O3 -march=native -funroll-loops -fPIE -o $(TAFFO_OUTPUT) -temp-dir taffo_tmp
 
 ifdef DEBUG
   FLAGS_INTEL        = -O0 -g -debug all -check all -traceback -check noarg_temp_created
