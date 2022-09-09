@@ -216,8 +216,15 @@ for opt in $raw_opts; do
           printf '%s\n' ${llvmbin}
           exit 0
           ;;
-        -help | -h | -version | -v | --help | --version)
+        -help | -h | --help)
           help=1
+          ;;
+        -v | -version | --version)
+          printf "clang info:\n-----------\n%s\n\n" "$($CLANG --version)"
+          printf "opt info:\n---------\n%s\n\n" "$($OPT --version)"
+          printf "llc info:\n---------\n%s\n\n" "$($LLC --version)"
+          printf "llvm-link info:\n---------------\n%s\n" "$($LLVM_LINK --version)"
+          exit 0
           ;;
         -*)
           opts="$opts $opt";
